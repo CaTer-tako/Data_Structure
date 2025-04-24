@@ -236,7 +236,8 @@ void BinaryNodeTree<ItemType>::inorder(void visit(ItemType&), BinaryNode<ItemTyp
    if (treePtr != nullptr)
    {
       inorder(visit, treePtr->getLeftChildPtr());
-      visit( treePtr->getItem() );
+      ItemType anItem = treePtr->getItem();
+      visit( anItem );
       inorder(visit, treePtr->getRightChildPtr());
    }  // end if
 }  // end inorder
@@ -278,7 +279,7 @@ BinaryNodeTree<ItemType>::BinaryNodeTree(const BinaryNodeTree<ItemType>& treePtr
 template<class ItemType>
 BinaryNodeTree<ItemType>::~BinaryNodeTree()
 {
-   destroyTree(rootPtr);
+   this->destroyTree(rootPtr);
 }  // end destructor
 
 //////////////////////////////////////////////////////////////
