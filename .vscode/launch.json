@@ -8,8 +8,9 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/workspaces/Data_Structure",
-      "program": "/workspaces/Data_Structure/build/Debug/outDebug",
+      "cwd": "/workspaces/Data_Structure/HW11/HW11-練習",
+      "program": "/workspaces/Data_Structure/HW11/HW11-練習/build/Debug/outDebug",
+
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

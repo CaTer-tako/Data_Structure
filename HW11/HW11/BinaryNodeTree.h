@@ -10,8 +10,6 @@
 #include "PrecondViolatedExcep.h"
 //#include "NotFoundException.h"
 #include <iostream>
-#include <climits>
-
 
 template<class ItemType>
 class BinaryNodeTree : public BinaryTreeInterface<ItemType>

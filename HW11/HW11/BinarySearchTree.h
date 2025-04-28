@@ -119,7 +119,7 @@ BinarySearchTree<ItemType>::BinarySearchTree(const BinarySearchTree<ItemType>& t
 template<class ItemType>
 BinarySearchTree<ItemType>::~BinarySearchTree()
 {
-   this->destroyTree( rootPtr );
+   destroyTree( rootPtr );
 }  // end destructor
 
 //////////////////////////////////////////////////////////////
@@ -161,30 +161,29 @@ void BinarySearchTree<ItemType>::levelorderTraverse(void visit(BinaryNode<ItemTy
 template<class ItemType>
 void BinarySearchTree<ItemType>::levelorder(void visit(BinaryNode<ItemType>&), BinaryNode<ItemType>* treePtr) const
 {
-	//�ϱotraverse�@��search tree�ɡAlevel�V�����V��visit�A
-	//�P�@�hlevel���`�I (sibling nodes)�h�ѥ��ܥkvisit�C
 	// the data structures that may be useful
 	queue<BinaryNode<ItemType>*> nodeQueue;
-	
+	stack<BinaryNode<ItemType>*> nodeStack;
+	BinaryNode<ItemType> *tmpPtr = treePtr;
+
+
 	// the following is actually an interative inoder
 	// replace the code with yours
-	nodeQueue.push(treePtr);
-	while(!nodeQueue.empty())
-	{
-		BinaryNode<ItemType>* tmpPtr = nodeQueue.front();
-		nodeQueue.pop();
-		// �إ߷s�`�I�ΨӦs��queue�}�Y
-		// ���Ჾ����queue
 
-		if(tmpPtr->getLeftChildPtr() != nullptr)
-			nodeQueue.push(tmpPtr->getLeftChildPtr());
-		if(tmpPtr->getRightChildPtr() != nullptr)
-			nodeQueue.push(tmpPtr->getRightChildPtr());
-		// �Y��/�k�`�I�s�b���ܡA�h�N��/�k�`�I�s�Jqueue��
 
-		visit(*tmpPtr);
-	}
-	
+	do {
+		while ( tmpPtr != NULL ) {
+			nodeStack.push( tmpPtr );
+			tmpPtr = tmpPtr->getLeftChildPtr();
+		}
+
+		if ( ! nodeStack.empty() ) {
+			tmpPtr = nodeStack.top();
+			visit( *tmpPtr );
+			nodeStack.pop();
+			tmpPtr = tmpPtr->getRightChildPtr();
+		}
+	} while ( ! nodeStack.empty() || tmpPtr != NULL );
 }  // end levelorder
 
 template<class ItemType>
@@ -199,8 +198,6 @@ template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemType>* subTreePtr,
                                                             BinaryNode<ItemType>* newNodePtr)
 {
-	//�ϱo���ƪ�word�[�Jsearch tree�ɡA���|���ͷs���`�I�A�ӬO�O����word�w�Q�[�J�X���C
-	//���Gclass BinaryNode�w�W�[�@count�ܼơA�ΨӰO����word�Q�[�J�����ơC
 	if (subTreePtr == nullptr)
 		return newNodePtr;
 
@@ -210,10 +207,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemT
 		tempPtr = insertInorder( subTreePtr->getLeftChildPtr(), newNodePtr );
 		subTreePtr->setLeftChildPtr( tempPtr );
 	}
-	else if(subTreePtr->getItem() == newNodePtr->getItem()){ //�Y[�{�b�`�I��] �ۦP�� [�s�K�[�`�I��]
-		subTreePtr->setCount(subTreePtr->getCount()+1); //then [�{�b�`�I��]+=1
-	}
-
 	else {
 		tempPtr = insertInorder( subTreePtr->getRightChildPtr(), newNodePtr );
 		subTreePtr->setRightChildPtr( tempPtr );
@@ -236,36 +229,25 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemTyp
                                      const ItemType target,
                                      bool& success)
 {
-	//�ϱo�R��search tree�����Yword�ɡA���D count�O1�A
-	//�_�h�������Ӹ`�I�A�ӶȬO���count�O�������ơC
-
 	if ( subTreePtr == nullptr ) {
 		success = false;
 		return nullptr;
 	}
 	
-	if ( subTreePtr->getItem() == target ) { //���ݧR���ؼ�
-		if(subTreePtr->getCount() > 1)
-			subTreePtr->setCount(subTreePtr->getCount()-1); //�Y[�{�b�`�I��]�h��1�A�N���-1�Ӥ��R���`�I
-		else 
-			subTreePtr = removeNode( subTreePtr );
-
+	if ( subTreePtr->getItem() == target ) {
+		subTreePtr = removeNode( subTreePtr );
 		success = true;
 		return subTreePtr;
 	}
 	
 	BinaryNode<ItemType>* tempPtr;
 
-	if ( subTreePtr->getItem() > target ) { 
-		//�����l���
-
+	if ( subTreePtr->getItem() > target ) {
 		tempPtr = removeValue( subTreePtr->getLeftChildPtr(), target, success );
 		subTreePtr->setLeftChildPtr( tempPtr );
 		return subTreePtr;
 	}
-	else { 
-		//���k�l���
-
+	else {
 		tempPtr = removeValue( subTreePtr->getRightChildPtr(), target, success );
 		subTreePtr->setRightChildPtr( tempPtr );
 		return subTreePtr;
@@ -275,9 +257,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemTyp
 template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType>* nodePtr)
 {
-	if ( nodePtr->isLeaf() ) { 
-		//�ݧR���`�I�ݩ󸭸`�I�ɡA�����ʧ@�A��§R���Y�i
-
+	if ( nodePtr->isLeaf() ) {
 		delete nodePtr;
 		nodePtr = nullptr;
 		return nodePtr;
@@ -285,7 +265,6 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType
 
 	if ( nodePtr->getLeftChildPtr() == nullptr || nodePtr->getRightChildPtr() == nullptr ) {
 		BinaryNode<ItemType>* nodeToConnectPtr = nodePtr->getRightChildPtr();
-		//�ݧR���`�I�u���@�Ӥl�`�I�ɡA�����Τl�`�I���N
 
 		if ( nodeToConnectPtr == nullptr )
 			nodeToConnectPtr = nodePtr->getLeftChildPtr();
@@ -299,11 +278,10 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType
 	ItemType newNodeValue;
 	int newWordCount;
 
-//	tempPtr = removeLeftmostNode( nodePtr->getRightChildPtr(), newNodeValue, newWordCount );
-//	nodePtr->setRightChildPtr( tempPtr );
-	tempPtr = removeRightmostNode( nodePtr->getLeftChildPtr(), newNodeValue, newWordCount );
-	nodePtr->setLeftChildPtr( tempPtr );
-
+	tempPtr = removeLeftmostNode( nodePtr->getRightChildPtr(), newNodeValue, newWordCount );
+	nodePtr->setRightChildPtr( tempPtr );
+//	tempPtr = removeRightmostNode( nodePtr->getLeftChildPtr(), newNodeValue, newWordCount );
+//	nodePtr->setLeftChildPtr( tempPtr );
 	nodePtr->setItem( newNodeValue );
 	nodePtr->setCount( newWordCount );
 	return nodePtr;
@@ -327,16 +305,8 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeRightmostNode(BinaryNode
                                             ItemType& inorderPredecessor, int& newWordCount)
 {
 
-	//�ϱo�u�������Y��word���`�I�ɡA��ůʥѳ̱�����p���word���`�I�ӻ��ɡC
+
 	// add your code here
-	if ( nodePtr->getRightChildPtr() == nullptr ) {
-		inorderPredecessor = nodePtr->getItem();
-		newWordCount = nodePtr->getCount();
-		return removeNode( nodePtr );
-	} 
-	else 
-		return removeRightmostNode( nodePtr->getRightChildPtr(), inorderPredecessor, newWordCount );
-	
 
 
 }
