@@ -1,7 +1,7 @@
 // HW11.cpp : 定義主控台應用程式的進入點。
 //
 
-#include "stdafx.h"
+#include "stdio.h"
 #include <iostream>
 #include <string>
 #include "BinarySearchTree.h"
@@ -89,3 +89,4 @@ int main()
 }
 
 
+//
