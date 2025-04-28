@@ -161,8 +161,8 @@ void BinarySearchTree<ItemType>::levelorderTraverse(void visit(BinaryNode<ItemTy
 template<class ItemType>
 void BinarySearchTree<ItemType>::levelorder(void visit(BinaryNode<ItemType>&), BinaryNode<ItemType>* treePtr) const
 {
-	//¨Ï±otraverse¤@­Ósearch tree®É¡Alevel¶V°ªªº¶V±ßvisit¡A
-	//¦P¤@¼hlevelªº¸`ÂI (sibling nodes)«h¥Ñ¥ª¦Ü¥kvisit¡C
+	//ï¿½Ï±otraverseï¿½@ï¿½ï¿½search treeï¿½É¡Alevelï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Vï¿½ï¿½visitï¿½A
+	//ï¿½Pï¿½@ï¿½hlevelï¿½ï¿½ï¿½`ï¿½I (sibling nodes)ï¿½hï¿½Ñ¥ï¿½ï¿½Ü¥kvisitï¿½C
 	// the data structures that may be useful
 	queue<BinaryNode<ItemType>*> nodeQueue;
 	
@@ -173,19 +173,17 @@ void BinarySearchTree<ItemType>::levelorder(void visit(BinaryNode<ItemType>&), B
 	{
 		BinaryNode<ItemType>* tmpPtr = nodeQueue.front();
 		nodeQueue.pop();
-		// «Ø¥ß·s¸`ÂI¥Î¨Ó¦s©ñqueue¶}ÀY
-		// ¤§«á²¾°£©óqueue
+		// ï¿½Ø¥ß·sï¿½`ï¿½Iï¿½Î¨Ó¦sï¿½ï¿½queueï¿½}ï¿½Y
+		// ï¿½ï¿½ï¿½á²¾ï¿½ï¿½ï¿½ï¿½queue
 
 		if(tmpPtr->getLeftChildPtr() != nullptr)
 			nodeQueue.push(tmpPtr->getLeftChildPtr());
 		if(tmpPtr->getRightChildPtr() != nullptr)
 			nodeQueue.push(tmpPtr->getRightChildPtr());
-		// ­Y¥ª/¥k¸`ÂI¦s¦bªº¸Ü¡A«h±N¥ª/¥k¸`ÂI¦s¤Jqueue¤¤
+		// ï¿½Yï¿½ï¿½/ï¿½kï¿½`ï¿½Iï¿½sï¿½bï¿½ï¿½ï¿½Ü¡Aï¿½hï¿½Nï¿½ï¿½/ï¿½kï¿½`ï¿½Iï¿½sï¿½Jqueueï¿½ï¿½
 
 		visit(*tmpPtr);
 	}
-	
-
 	
 }  // end levelorder
 
@@ -201,9 +199,8 @@ template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemType>* subTreePtr,
                                                             BinaryNode<ItemType>* newNodePtr)
 {
-	//¨Ï±o­«½Æªºword¥[¤Jsearch tree®É¡A¤£·|²£¥Í·sªº¸`ÂI¡A¦Ó¬O°O¿ý¸Óword¤w³Q¥[¤J´X¦¸¡C
-	//µù¡Gclass BinaryNode¤w¼W¥[¤@countÅÜ¼Æ¡A¥Î¨Ó°O¿ý¸Óword³Q¥[¤Jªº¦¸¼Æ¡C
-
+	//ï¿½Ï±oï¿½ï¿½ï¿½Æªï¿½wordï¿½[ï¿½Jsearch treeï¿½É¡Aï¿½ï¿½ï¿½|ï¿½ï¿½ï¿½Í·sï¿½ï¿½ï¿½`ï¿½Iï¿½Aï¿½Ó¬Oï¿½Oï¿½ï¿½ï¿½ï¿½wordï¿½wï¿½Qï¿½[ï¿½Jï¿½Xï¿½ï¿½ï¿½C
+	//ï¿½ï¿½ï¿½Gclass BinaryNodeï¿½wï¿½Wï¿½[ï¿½@countï¿½Ü¼Æ¡Aï¿½Î¨Ó°Oï¿½ï¿½ï¿½ï¿½wordï¿½Qï¿½[ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Æ¡C
 	if (subTreePtr == nullptr)
 		return newNodePtr;
 
@@ -213,9 +210,10 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::insertInorder(BinaryNode<ItemT
 		tempPtr = insertInorder( subTreePtr->getLeftChildPtr(), newNodePtr );
 		subTreePtr->setLeftChildPtr( tempPtr );
 	}
-	else if(subTreePtr->getItem() == newNodePtr->getItem()){ //­Y[²{¦b¸`ÂI­È] ¬Û¦P©ó [·s²K¥[¸`ÂI­È]
-		subTreePtr->setCount(subTreePtr->getCount()+1); //then [²{¦b¸`ÂI­È]+=1
+	else if(subTreePtr->getItem() == newNodePtr->getItem()){ //ï¿½Y[ï¿½{ï¿½bï¿½`ï¿½Iï¿½ï¿½] ï¿½Û¦Pï¿½ï¿½ [ï¿½sï¿½Kï¿½[ï¿½`ï¿½Iï¿½ï¿½]
+		subTreePtr->setCount(subTreePtr->getCount()+1); //then [ï¿½{ï¿½bï¿½`ï¿½Iï¿½ï¿½]+=1
 	}
+
 	else {
 		tempPtr = insertInorder( subTreePtr->getRightChildPtr(), newNodePtr );
 		subTreePtr->setRightChildPtr( tempPtr );
@@ -238,19 +236,20 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemTyp
                                      const ItemType target,
                                      bool& success)
 {
-	//¨Ï±o§R°£search tree¤¤ªº¬Yword®É¡A°£«D count¬O1¡A
-	//§_«h¤£²¾°£¸Ó¸`ÂI¡A¦Ó¶È¬O´î¤Öcount°O¿ýªº¦¸¼Æ¡C
+	//ï¿½Ï±oï¿½Rï¿½ï¿½search treeï¿½ï¿½ï¿½ï¿½ï¿½Ywordï¿½É¡Aï¿½ï¿½ï¿½D countï¿½O1ï¿½A
+	//ï¿½_ï¿½hï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¸`ï¿½Iï¿½Aï¿½Ó¶È¬Oï¿½ï¿½ï¿½countï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¡C
 
 	if ( subTreePtr == nullptr ) {
 		success = false;
 		return nullptr;
 	}
 	
-	if ( subTreePtr->getItem() == target ) { //§ä¨ì«Ý§R°£¥Ø¼Ð
+	if ( subTreePtr->getItem() == target ) { //ï¿½ï¿½ï¿½Ý§Rï¿½ï¿½ï¿½Ø¼ï¿½
 		if(subTreePtr->getCount() > 1)
-			subTreePtr->setCount(subTreePtr->getCount()-1); //­Y[²{¦b¸`ÂI­È]¦h©ó1¡A´N³æ¯Â-1¦Ó¤£§R°£¸`ÂI
+			subTreePtr->setCount(subTreePtr->getCount()-1); //ï¿½Y[ï¿½{ï¿½bï¿½`ï¿½Iï¿½ï¿½]ï¿½hï¿½ï¿½1ï¿½Aï¿½Nï¿½ï¿½ï¿½-1ï¿½Ó¤ï¿½ï¿½Rï¿½ï¿½ï¿½`ï¿½I
 		else 
 			subTreePtr = removeNode( subTreePtr );
+
 		success = true;
 		return subTreePtr;
 	}
@@ -258,13 +257,15 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeValue(BinaryNode<ItemTyp
 	BinaryNode<ItemType>* tempPtr;
 
 	if ( subTreePtr->getItem() > target ) { 
-		//©¹¥ª¤l¾ð§ä
+		//ï¿½ï¿½ï¿½ï¿½ï¿½lï¿½ï¿½ï¿½
+
 		tempPtr = removeValue( subTreePtr->getLeftChildPtr(), target, success );
 		subTreePtr->setLeftChildPtr( tempPtr );
 		return subTreePtr;
 	}
 	else { 
-		//©¹¥k¤l¾ð§ä
+		//ï¿½ï¿½ï¿½kï¿½lï¿½ï¿½ï¿½
+
 		tempPtr = removeValue( subTreePtr->getRightChildPtr(), target, success );
 		subTreePtr->setRightChildPtr( tempPtr );
 		return subTreePtr;
@@ -275,7 +276,8 @@ template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType>* nodePtr)
 {
 	if ( nodePtr->isLeaf() ) { 
-		//«Ý§R°£¸`ÂIÄÝ©ó¸­¸`ÂI®É¡A¤£°µ°Ê§@¡A³æ¯Â§R°£§Y¥i
+		//ï¿½Ý§Rï¿½ï¿½ï¿½`ï¿½Iï¿½Ý©ó¸­¸`ï¿½Iï¿½É¡Aï¿½ï¿½ï¿½ï¿½ï¿½Ê§@ï¿½Aï¿½ï¿½Â§Rï¿½ï¿½ï¿½Yï¿½i
+
 		delete nodePtr;
 		nodePtr = nullptr;
 		return nodePtr;
@@ -283,7 +285,8 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType
 
 	if ( nodePtr->getLeftChildPtr() == nullptr || nodePtr->getRightChildPtr() == nullptr ) {
 		BinaryNode<ItemType>* nodeToConnectPtr = nodePtr->getRightChildPtr();
-		//«Ý§R°£¸`ÂI¥u¦³¤@­Ó¤l¸`ÂI®É¡Aª½±µ¥Î¤l¸`ÂI´À¥N
+		//ï¿½Ý§Rï¿½ï¿½ï¿½`ï¿½Iï¿½uï¿½ï¿½ï¿½@ï¿½Ó¤lï¿½`ï¿½Iï¿½É¡Aï¿½ï¿½ï¿½ï¿½ï¿½Î¤lï¿½`ï¿½Iï¿½ï¿½ï¿½N
+
 		if ( nodeToConnectPtr == nullptr )
 			nodeToConnectPtr = nodePtr->getLeftChildPtr();
 
@@ -300,6 +303,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeNode(BinaryNode<ItemType
 //	nodePtr->setRightChildPtr( tempPtr );
 	tempPtr = removeRightmostNode( nodePtr->getLeftChildPtr(), newNodeValue, newWordCount );
 	nodePtr->setLeftChildPtr( tempPtr );
+
 	nodePtr->setItem( newNodeValue );
 	nodePtr->setCount( newWordCount );
 	return nodePtr;
@@ -309,8 +313,7 @@ template<class ItemType>
 BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeLeftmostNode(BinaryNode<ItemType>* nodePtr,
                                             ItemType& inorderSuccessor, int& newWordCount)
 {
-	if ( nodePtr->getLeftChildPtr() == nullptr ) 
-	{
+	if ( nodePtr->getLeftChildPtr() == nullptr ) {
 		inorderSuccessor = nodePtr->getItem();
 		newWordCount = nodePtr->getCount();
 		return removeNode( nodePtr );
@@ -324,7 +327,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeRightmostNode(BinaryNode
                                             ItemType& inorderPredecessor, int& newWordCount)
 {
 
-	//¨Ï±o¯u¥¿²¾°£¬Y­Ówordªº¸`ÂI®É¡A¨äªÅ¯Ê¥Ñ³Ì±µªñ¦ý¤p©ó¸Ówordªº¸`ÂI¨Ó»¼¸É¡C
+	//ï¿½Ï±oï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Yï¿½ï¿½wordï¿½ï¿½ï¿½`ï¿½Iï¿½É¡Aï¿½ï¿½Å¯Ê¥Ñ³Ì±ï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½ï¿½wordï¿½ï¿½ï¿½`ï¿½Iï¿½Ó»ï¿½ï¿½É¡C
 	// add your code here
 	if ( nodePtr->getRightChildPtr() == nullptr ) {
 		inorderPredecessor = nodePtr->getItem();
@@ -334,6 +337,7 @@ BinaryNode<ItemType>* BinarySearchTree<ItemType>::removeRightmostNode(BinaryNode
 	else 
 		return removeRightmostNode( nodePtr->getRightChildPtr(), inorderPredecessor, newWordCount );
 	
+
 
 }
 

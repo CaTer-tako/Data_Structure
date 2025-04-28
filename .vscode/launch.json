@@ -10,6 +10,7 @@
       "externalConsole": false,
       "cwd": "/workspaces/Data_Structure/HW11/HW11-練習",
       "program": "/workspaces/Data_Structure/HW11/HW11-練習/build/Debug/outDebug",
+
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

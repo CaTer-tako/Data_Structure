@@ -12,6 +12,7 @@
 #include <iostream>
 #include <climits>
 
+
 template<class ItemType>
 class BinaryNodeTree : public BinaryTreeInterface<ItemType>
 {
